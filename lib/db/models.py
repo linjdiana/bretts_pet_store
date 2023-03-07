@@ -73,4 +73,3 @@ class Order(Base):
             + f'Pet Item ID: {self.pet_item_id}' \
             + f'Shopping Cart ID: {self.shopping_cart_id}'
 
-
