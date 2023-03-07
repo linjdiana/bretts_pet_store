@@ -21,7 +21,7 @@ def create_stores():
     session.commit()
     return stores
 
-def create_petitems():
+def create_pet_items():
     petitems = [PetItem(
         name = fake.name(),
         quantity=randint(0, 10),
@@ -38,7 +38,15 @@ def create_shoppingcarts():
     return shoppingcarts
 
 if __name__ == '__main__':
-    games = create_stores()
-    reviews = create_petitems()
-    users = create_shoppingcarts()
+    stores = create_stores()
+    petitems = create_petitems()
+    shoppingcarts = create_shoppingcarts()
 
+if __name__ == '__main__':
+    
+    session.query(pet_item_store).delete()
+    session.commit()
+
+    pet_items = create_pet_items()
+    stores = create_stores()
+    create_shopping_carts(pet_items, stores)
