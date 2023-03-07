@@ -1,12 +1,12 @@
 
-# from faker import Faker
+from faker import Faker
 import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from db.models import PetItem, Store, ShoppingCart
 
-# fake = Faker()
+fake = Faker()
 
 if __name__ == '__main__':
     
