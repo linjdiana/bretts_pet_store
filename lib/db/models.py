@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, func
-from sqlalchemy import ForeignKey, Table, Column, Integer, Float, String
+from sqlalchemy import PrimaryKeyConstraint, ForeignKey, Table, Column, Integer, Float, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -18,35 +18,37 @@ pet_item_store = Table(
 )
 
 class PetItem(Base):
-    __tablename__ = 'petitems'
+    __tablename__ = 'pet_items'
+    __table_args__ = (PrimaryKeyConstraint('id'))
 
-    id = Column(Integer(), primary_key=True)
-    name = Column(String(25), index = True)
+    id = Column(Integer())
+    name = Column(String())
     quantity = Column(Integer())
-    price = Column(Float())
     unit_price = Column(Float())
 
     shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
-    stores = relationship('Store', secondary=pet_item_store, back_populates='grocery_items')
+    # stores = relationship('Store', secondary=pet_item_store, back_populates='grocery_items')
 
     def __repr__(self):
         return f'PetItem(id={self.id}, ' + \
             f'name={self.name}, ' + \
-            f'price={self.price})'
+            f'unit_price={self.unit_price})'
     
 class Store(Base):
     __tablename__ = 'stores'
+    __table_args__ = (PrimaryKeyConstraint('id'))
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(Integer())
     name = Column(String())
     address = Column(String())
 
-    shopping_carts = relationship('ShoppingCart', backref=backref('store'))
-    pet_items = relationship('PetItem', backref=backref('stores'))
+    # shopping_carts = relationship('ShoppingCart', backref=backref('store'))
+    # pet_items = relationship('PetItem', backref=backref('stores'))
 
     def __repr__(self):
         return f'Store(id={self.id}), ' + \
-            f'name={self.name}'
+            f'name={self.name}' + \
+            f'address={self.address}'
     
     ## what do we do with the one shopping cart? 
 class ShoppingCart(Base):
@@ -56,7 +58,7 @@ class ShoppingCart(Base):
 
     pet_items = relationship('PetItem')
 
-    store_id = Column(Integer(), ForeignKey('pet_stores.id'))
+    store_id = Column(Integer(), ForeignKey('stores.id'))
     
     def __repr__(self):
         return f'ShoppingCart(id={self.id})'
