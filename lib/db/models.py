@@ -19,7 +19,7 @@ pet_item_store = Table(
 
 class PetItem(Base):
     __tablename__ = 'pet_items'
-    __table_args__ = (PrimaryKeyConstraint('id'))
+    __table_args__ = (PrimaryKeyConstraint('id'),)
 
     id = Column(Integer())
     name = Column(String())
@@ -37,7 +37,7 @@ class PetItem(Base):
     
 class Store(Base):
     __tablename__ = 'stores'
-    __table_args__ = (PrimaryKeyConstraint('id'))
+    __table_args__ = (PrimaryKeyConstraint('id'),)
 
     id = Column(Integer())
     name = Column(String())
@@ -54,12 +54,23 @@ class Store(Base):
     ## what do we do with the one shopping cart? 
 class ShoppingCart(Base):
     __tablename__ = 'shopping_carts'
+    __table_args__ = (PrimaryKeyConstraint('id'),)
 
+    id = Column(Integer())
     store_id = Column(Integer(), ForeignKey('stores.id'))
-
-    pet_items = relationship('PetItem')
     
     def __repr__(self):
         return f'ShoppingCart(id={self.id})'
 
 # different table that keeps track of all the stuff that goes into the shopping cart ((jointable)) 
+class Order(Base):
+    __tablename__ = 'orders'
+    id = Column(Integer(), primary_key=True)
+    pet_item_id = Column(Integer(), ForeignKey('pet_items.id'))
+    shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
+    def __repr__(self):
+        return f'Order ID: {self.id}' \
+            + f'Pet Item ID: {self.pet_item_id}' \
+            + f'Shopping Cart ID: {self.shopping_cart_id}'
+
+
