@@ -4,7 +4,7 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Store, PetItem, ShoppingCart, pet_item_store
+from models import Store, PetItem, ShoppingCart, Order, pet_item_store
 
 engine = create_engine('sqlite:///pet_stores.db')
 Session = sessionmaker(bind=engine)
@@ -22,7 +22,7 @@ def create_stores():
     return stores
 
 def create_pet_items():
-    petitems = [PetItem(
+    pet_items = [PetItem(
         name = fake.name(),
         quantity=randint(0, 10),
         unit_price = round(float(randint(0, 50)) + random(), 2)
@@ -37,10 +37,18 @@ def create_shopping_carts():
     session.commit()
     return shoppingcarts
 
-if __name__ == '__main__':
-    stores = create_stores()
-    pet_items = create_pet_items()
-    shoppingcarts = create_shopping_carts()
+def create_orders():
+    print("Deleting existing order...")
+    session.query(Order).delete()
+    session.commit()
+
+    print("Creating an order...")
+    orders = [Order() for i in range(10)]
+    session.add_all(orders)
+    session.commit()
+
+    return orders
+
 
 if __name__ == '__main__':
     
@@ -49,4 +57,5 @@ if __name__ == '__main__':
 
     pet_items = create_pet_items()
     stores = create_stores()
-    create_shopping_carts(pet_items, stores)
+    shoppingcarts = create_shopping_carts(pet_items, stores)
+    orders = create_orders()
