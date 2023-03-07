@@ -25,6 +25,7 @@ class PetItem(Base):
     name = Column(String())
     quantity = Column(Integer())
     unit_price = Column(Float())
+    store_id = Column(Integer(), ForeignKey('stores.id'))
 
     shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
     # stores = relationship('Store', secondary=pet_item_store, back_populates='grocery_items')
@@ -54,12 +55,11 @@ class Store(Base):
 class ShoppingCart(Base):
     __tablename__ = 'shopping_carts'
 
-    id = Column(Integer(), primary_key=True)
+    store_id = Column(Integer(), ForeignKey('stores.id'))
 
     pet_items = relationship('PetItem')
-
-    store_id = Column(Integer(), ForeignKey('stores.id'))
     
     def __repr__(self):
         return f'ShoppingCart(id={self.id})'
-    
+
+# different table that keeps track of all the stuff that goes into the shopping cart ((jointable)) 

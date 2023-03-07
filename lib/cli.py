@@ -8,7 +8,7 @@ from db.models import Store
 from helpers import (create_store_table, create_pet_item_table,
                      fill_cart, show_cart, remove_from_cart, collect_payment)
 
-engine = create_engine('sqlite:///db/grocery_stores.db')
+engine = create_engine('sqlite:///db/pet_stores.db')
 session = sessionmaker(bind=engine)()
 
 if __name__ == '__main__':
