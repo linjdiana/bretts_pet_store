@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, func
-from sqlalchemy import ForeignKey, Table, Column, Integer, Float, String, DateTime
+from sqlalchemy import ForeignKey, Table, Column, Integer, Float, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -18,13 +18,16 @@ pet_item_store = Table(
 )
 
 class PetItem(Base):
-    __tablename__ = 'pet_items'
+    __tablename__ = 'petitems'
 
     id = Column(Integer(), primary_key=True)
     name = Column(String(25), index = True)
     quantity = Column(Integer())
     price = Column(Float())
     unit_price = Column(Float())
+
+    shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
+    stores = relationship('Store', secondary=pet_item_store, back_populates='grocery_items')
 
     def __repr__(self):
         return f'PetItem(id={self.id}, ' + \
@@ -39,13 +42,22 @@ class Store(Base):
     address = Column(String())
 
     shopping_carts = relationship('ShoppingCart', backref=backref('store'))
-    grocery_items = relationship('PetItem', secondary=pet_item_store, back_populates='stores')
-
-    pet_items = relationship('Pet_item', backref=backref('store'))
-
+    pet_items = relationship('PetItem', backref=backref('stores'))
 
     def __repr__(self):
         return f'Store(id={self.id}), ' + \
             f'name={self.name}'
     
     ## what do we do with the one shopping cart? 
+class ShoppingCart(Base):
+    __tablename__ = 'shopping_carts'
+
+    id = Column(Integer(), primary_key=True)
+
+    pet_items = relationship('PetItem')
+
+    store_id = Column(Integer(), ForeignKey('pet_stores.id'))
+    
+    def __repr__(self):
+        return f'ShoppingCart(id={self.id})'
+    
