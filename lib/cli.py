@@ -2,7 +2,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from rich import print
+# from rich import print
 
 from db.models import Store
 from helpers import (create_store_table, create_pet_item_table,
