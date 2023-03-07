@@ -27,11 +27,11 @@ def create_pet_items():
         quantity=randint(0, 10),
         unit_price = round(float(randint(0, 50)) + random(), 2)
     ) for i in range(50)]
-    session.add_all(petitems)
+    session.add_all(pet_items)
     session.commit()
-    return petitems
+    return pet_items
 
-def create_shoppingcarts():
+def create_shopping_carts():
     shoppingcarts = [ShoppingCart() for i in range(50)]
     session.add_all(shoppingcarts)
     session.commit()
@@ -39,8 +39,8 @@ def create_shoppingcarts():
 
 if __name__ == '__main__':
     stores = create_stores()
-    petitems = create_petitems()
-    shoppingcarts = create_shoppingcarts()
+    pet_items = create_pet_items()
+    shoppingcarts = create_shopping_carts()
 
 if __name__ == '__main__':
     
