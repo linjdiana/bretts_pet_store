@@ -10,14 +10,14 @@ engine = create_engine('sqlite:///pet_stores.db')
 
 Base = declarative_base()
 
-# pet_item_store = Table(
-#     'pet_item_stores',
-#     Base.metadata,
-#     Column('pet_item_id', ForeignKey('pet_items.id'), primary_key=True),
-#     # store ID
-#     Column('store_id', ForeignKey('stores.id'), primary_key=True),
-#     #Column('quantity_purchased', ForeignKey('quantity_purchased'), primary_key=True)
-# )
+pet_item_store = Table(
+    'pet_item_stores',
+    Base.metadata,
+    Column('pet_item_id', ForeignKey('pet_items.id'), primary_key=True),
+    # store ID
+    Column('store_id', ForeignKey('stores.id'), primary_key=True),
+    #Column('quantity_purchased', ForeignKey('quantity_purchased'), primary_key=True)
+)
 
 class PetItem(Base):
     __tablename__ = 'pet_items'
