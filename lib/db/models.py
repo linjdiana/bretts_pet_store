@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, func
 from sqlalchemy import PrimaryKeyConstraint, ForeignKey, Table, Column, Integer, Float, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 
@@ -28,7 +29,7 @@ class PetItem(Base):
     unit_price = Column(Float())
     # store_id = Column(Integer(), ForeignKey('stores.id'))
 
-    shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
+    # shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))
     stores = relationship('Store', secondary=pet_item_store, back_populates='pet_items')
 
     def __repr__(self):
@@ -58,7 +59,9 @@ class ShoppingCart(Base):
     __tablename__ = 'shopping_carts'
     __table_args__ = (PrimaryKeyConstraint('id'),)
 
-    pet_items = relationship('PetItem')
+    # pet_items = relationship('PetItem', secondary='Order')
+    orders = relationship('Order', backref='shopping_cart')
+    pet_items = association_proxy('orders', 'pet_item', creator=lambda pi: Order(pet_item=pi))
 
     id = Column(Integer())
     store_id = Column(Integer(), ForeignKey('stores.id'))
@@ -72,6 +75,8 @@ class ShoppingCart(Base):
 # different table that keeps track of all the stuff that goes into the shopping cart ((jointable)) 
 class Order(Base):
     __tablename__ = 'orders'
+
+
     id = Column(Integer(), primary_key=True)
     pet_item_id = Column(Integer(), ForeignKey('pet_items.id'))
     shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))

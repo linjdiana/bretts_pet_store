@@ -1,8 +1,8 @@
-"""changed database name
+"""association_proxy
 
-Revision ID: 81e1862e8134
-Revises: 
-Create Date: 2023-03-06 15:57:37.122373
+Revision ID: 1dff498d7817
+Revises: ec270917635a
+Create Date: 2023-03-08 09:42:18.599227
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '81e1862e8134'
-down_revision = None
+revision = '1dff498d7817'
+down_revision = 'ec270917635a'
 branch_labels = None
 depends_on = None
 
