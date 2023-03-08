@@ -14,7 +14,7 @@ fake = Faker()
 
 def create_stores():
     print("Deleting existing stores...")
-    session.query(Order).delete()
+    session.query(Store).delete()
     session.commit()
 
     print("New stores generating...")
@@ -29,7 +29,7 @@ def create_stores():
 
 def create_pet_items():
     print("Deleting existing pet items...")
-    session.query(Order).delete()
+    session.query(PetItem).delete()
     session.commit()
 
     print("Creating new items for your pet...")
@@ -42,16 +42,25 @@ def create_pet_items():
     session.commit()
     return pet_items
 
-def create_shopping_carts():
+def create_shopping_carts(pet_items, stores):
     print("Deleting existing shopping cart...")
-    session.query(Order).delete()
+    session.query(ShoppingCart).delete()
     session.commit()
 
     print("Creating a new shopping cart for you!")
-    shoppingcarts = [ShoppingCart() for i in range(50)]
-    session.add_all(shoppingcarts)
+    
+    # shoppingcarts = [ShoppingCart(store=rc(stores)) for i in range(50)]
+    shopping_carts = []
+    for i in range(25):
+        store = rc(stores)
+        random_pet_items = [rc(pet_items) for i in range(10)]
+        for item in random_pet_items:
+            if not item in store.pet_items:
+                store.pet_items.append(item)
+        shopping_carts.append(ShoppingCart(store=store))
+    session.add_all(shopping_carts)
     session.commit()
-    return shoppingcarts
+    return shopping_carts
 
 def create_orders():
     print("Deleting existing order...")
@@ -73,5 +82,5 @@ if __name__ == '__main__':
 
     pet_items = create_pet_items()
     stores = create_stores()
-    shoppingcarts = create_shopping_carts()
+    shoppingcarts = create_shopping_carts(pet_items, stores)
     orders = create_orders()
