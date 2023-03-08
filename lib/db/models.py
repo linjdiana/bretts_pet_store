@@ -26,7 +26,7 @@ class PetItem(Base):
     id = Column(Integer())
     name = Column(String())
     quantity = Column(Integer())
-    unit_price = Column(Float())
+    unit_price = Column(Integer())
     # store_id = Column(Integer(), ForeignKey('stores.id'))
 
     # shopping_cart_id = Column(Integer(), ForeignKey('shopping_carts.id'))

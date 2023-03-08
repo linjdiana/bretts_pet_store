@@ -12,6 +12,10 @@ session = Session()
 
 fake = Faker()
 
+pet_names = ["Max", "Buddy", "Charlie", "Rocky", "Cooper", "Bear", "Duke", "Teddy", "Harley", "Oliver", "Jack", "Tucker", "Zeus", "Jake", "Winston", "Oscar", "Bailey", "Gus", "Loki", "Roxy", "Stella", "Maggie", "Luna", "Daisy", "Rosie", "Sadie", "Lucy", "Coco", "Chloe", "Lilly", "Sophie", "Zoe", "Abby", "Gracie", "Ruby", "Molly", "Emma", "Mia", "Ava", "Isabella", "Leah", "Avery", "Ella", "Scarlett", "Lila", "Nora", "Hazel", "Lucy", "Lily"]
+
+pets = ["Domestic Long Hair", "Domestic Short Hair", "Siamese", "Ragdoll", "Persian", "Bengal", "Russian Blue", "Sphynx", "American Shorthair", "Scottish Fold", "Maine Coon", "Devon Rex", "Burmese", "Abyssinian", "Cornish Rex", "Himalayan", "Turkish Angora", "Tonkinese", "British Shorthair", "Oriental Shorthair", "Exotic Shorthair", "Chartreux", "Birman", "Norwegian Forest Cat", "Balinese", "Snowshoe", "Manx", "Somali", "Turkish Van", "Bombay", "Japanese Bobtail", "Singapura", "American Wirehair", "Egyptian Mau", "LaPerm", "Peterbald", "Selkirk Rex", "Ocicat", "Pixie-Bob", "Siberian Husky", "Labrador Retriever", "Golden Retriever", "Chihuahua", "Poodle", "Bulldog", "German Shepherd", "Boxer", "Beagle", "Dachshund", "Yorkshire Terrier", "Great Dane", "Bichon Frise", "Bernese Mountain Dog"]
+
 def create_stores():
     print("Deleting existing stores...")
     session.query(Store).delete()
@@ -28,16 +32,19 @@ def create_stores():
     return stores
 
 def create_pet_items():
-    print("Deleting existing pet items...")
+    print("Deleting existing pets...")
     session.query(PetItem).delete()
     session.commit()
 
-    print("Creating new items for your pet...")
-    pet_items = [PetItem(
-        name = fake.name(),
-        quantity=randint(0, 10),
-        unit_price = round(float(randint(0, 50)) + random(), 2)
-    ) for i in range(50)]
+    print("Creating new pets...")
+    pet_items = []
+    for breed in pets:
+        item = PetItem(
+            name = breed,
+            quantity=randint(0, 10),
+            unit_price=randint(200, 5000)
+        )
+        pet_items.append(item)
     session.add_all(pet_items)
     session.commit()
     return pet_items
