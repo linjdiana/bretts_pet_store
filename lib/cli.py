@@ -9,13 +9,14 @@ from db.models import Store, PetItem, pet_item_store
 from helpers import (create_store_table, create_pet_item_table, YES, NO)
 
 console = Console()
+
 #  , fill_cart, show_cart, collect_payment
 
 engine = create_engine('sqlite:///pet_stores.db')
 session = sessionmaker(bind=engine)()
 
 if __name__ == '__main__':
-    console.print('''[fuchsia]
+    console.print('''[dark_cyan]
     __________                 __    __ /\        __________        __          
     \______   \_______   _____/  |__/  |)/ ______ \______   \ _____/  |_  ______
     |    |  _/\_  __ \_/ __ \   __\   __\/  ___/  |     ___// __ \   __\/  ___/
@@ -28,8 +29,8 @@ if __name__ == '__main__':
                            ==(Y)==         (V)
                 ----------(u)---(u)----oOo--U--oOo---
                 __|_______|_______|_______|_______|___''')
-    console.print("[bold yellow]Welcome to Brett's Pets!")
-    console.print('[bold]Here is a list of available stores:')
+    console.print("[bold yellow]Welcome to Brett\'s Pets! ""\U0001F63B""\U0001F429""\U0001F9A7")
+    console.print('[bold dark_orange]Here is a list of available stores:')
 
     cart= []
 
@@ -44,7 +45,6 @@ if __name__ == '__main__':
 
         console.print(f'[bold red]Here is a list of pets at {store.name}:  ')
         pets = session.query(PetItem).filter(PetItem.stores.any(id=store.id))
-        #.filter(PetItem.id = pet_item_store.pet_items_id).filter(PetItemsStore.store_id=store)
         create_pet_item_table(pets)
 
         pet = None
@@ -54,20 +54,19 @@ if __name__ == '__main__':
 
         console.print(f'[bold magenta]You have selected {pet.name}. Their adoption fee ${pet.unit_price:.2f}.')
         cart.append(pet)
-        #print(f'{cart}')
 
-        answer = console.input("[bold yellow]Would you like to adopt another pet? (y/n)").lower()
+        answer = console.input("[bold dark_turquoise]Would you like to adopt another pet? (y/n)").lower()
         if answer in NO:
             total_cost = sum(pet.unit_price for pet in cart)
 
-            console.print(f'[bold lime]Your total adoption fee(s) is ${total_cost:.2f}.')
-            print('''
+            console.print(f'[bold dark_red]Your total adoption fee(s) is ${total_cost:.2f}.')
+            console.print('''[blue]
                  ___ _,_  _, _, _ _,_   , _  _, _,_   __,  _, __,    _, _,_  _, __, __, _ _, _  _,   _  _ _ ___ _,_   __, __, __, ___ ___ ,  _,   __, __, ___  _, ,
                   |  |_| /_\ |\ | |_/   \ | / \ | |   |_  / \ |_)   (_  |_| / \ |_) |_) | |\ | / _   |  | |  |  |_|   |_) |_) |_   |   |  ' (_    |_) |_   |  (_  |
-                  |  | | | | | \| | \    \| \_/ | |   |   \_/ | \   ,_) | | \ / |   |   | | \| \_/   |/\| |  |  | |   |_) | \ |_   |   |    , )   |   |_   |  ,_) |
+                  |  | | | | | \| | \    \| \_/ | |   |   \_/ | \   ,_) | | \ / |   |   | | \| \_/   |/\| |  |  | |   |_) | \ |_   |   |    ,_)   |   |_   |  ,_) |
                   ~  ~ ~ ~ ~ ~  ~ ~ ~     )  ~  `~'   ~    ~  ~ ~    ~  ~ ~  ~  ~   ~   ~ ~  ~  ~    ~  ~ ~  ~  ~ ~   ~   ~ ~ ~~~  ~   ~     ~    ~   ~~~  ~   ~  .
                                          ~'                                                                                                                        
-                                                                    |\_/|                  
+                                                                   [light_sea_green] |\_/|                  
                                                                     | @ @   Woof! 
                                                                     |   <>              _             |\      _,,,---,,_ 
                                                                     |  _/\------____ ((| |))    ZZZzz /,`.-'`'    -.  ;-;;,_
