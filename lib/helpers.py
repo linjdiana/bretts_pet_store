@@ -1,21 +1,23 @@
 from db.models import PetItem, Order
+from rich.console import Console
+console = Console()
 
 YES = ['y', 'ye', 'yes']
 NO = ['n', 'no']
 
 def create_store_table(stores):
-    print('-' * 50)
-    print(f'|ID  |NAME{" " * 39}|')
-    print('-' * 50)
+    console.print('[teal]-' * 50)
+    console.print(f'[bold purple]|ID  |NAME{" " * 39}|')
+    console.print('[teal]-' * 50)
     for store in stores:
         id_spaces = 4 - len(str(store.id))
         name_spaces = 43 - len(store.name)
-        print(f'|{store.id}{" " * id_spaces}|{store.name}{" " * name_spaces}|')
-    print('-' * 50)
+        console.print(f'[cyan]|{store.id}{" " * id_spaces}|{store.name}{" " * name_spaces}|')
+    console.print('[teal]-' * 50)
 
 def create_pet_item_table(pet_items):
     print('-' * 50)
-    print(f'|ID  |PET NAME{" " * 24}|PRICE{" " * 4}|')
+    console.print(f'[bold purple]|ID  |PET NAME{" " * 24}|PRICE{" " * 4}|')
     print('-' * 50)
     for pet_item in sorted(pet_items, key=lambda g: g.id):
         id_spaces = 4 - len(str(pet_item.id))
@@ -24,7 +26,7 @@ def create_pet_item_table(pet_items):
         output_string = f'|{pet_item.id}{" " * id_spaces}|' + \
             f'{pet_item.name}{" " * name_spaces}|' + \
             f'${pet_item.unit_price:.2f}{" " * price_spaces}|'
-        print(output_string)
+        console.print(f'[cyan]{output_string}')
     print('-' * 40)
 
 # def fill_cart(session, store):

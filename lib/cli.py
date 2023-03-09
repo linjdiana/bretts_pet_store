@@ -2,19 +2,20 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-# from rich import print
+
 from rich.console import Console
 
 from db.models import Store, PetItem, pet_item_store
 from helpers import (create_store_table, create_pet_item_table, YES, NO)
 
+console = Console()
 #  , fill_cart, show_cart, collect_payment
 
 engine = create_engine('sqlite:///pet_stores.db')
 session = sessionmaker(bind=engine)()
 
 if __name__ == '__main__':
-    print('''
+    console.print('''[fuchsia]
     __________                 __    __ /\        __________        __          
     \______   \_______   _____/  |__/  |)/ ______ \______   \ _____/  |_  ______
     |    |  _/\_  __ \_/ __ \   __\   __\/  ___/  |     ___// __ \   __\/  ___/
@@ -27,8 +28,8 @@ if __name__ == '__main__':
                            ==(Y)==         (V)
                 ----------(u)---(u)----oOo--U--oOo---
                 __|_______|_______|_______|_______|___''')
-    print("Welcome to Brett's Pets!")
-    print('Here is a list of available stores:')
+    console.print("[bold yellow]Welcome to Brett's Pets!")
+    console.print('[bold]Here is a list of available stores:')
 
     cart= []
 
@@ -38,27 +39,28 @@ if __name__ == '__main__':
         create_store_table(stores)
         store = None
         while not store:
-            store_id = input('Which pet store would you like to shop at?  ')
+            store_id = console.input('[bold yellow]Which pet store would you like to shop at?  ')
             store = session.query(Store).filter(Store.id == store_id).one_or_none()
 
-        print(f'Here is a list of pets at {store.name}:  ')
+        console.print(f'[bold red]Here is a list of pets at {store.name}:  ')
         pets = session.query(PetItem).filter(PetItem.stores.any(id=store.id))
         #.filter(PetItem.id = pet_item_store.pet_items_id).filter(PetItemsStore.store_id=store)
         create_pet_item_table(pets)
 
         pet = None
         while not pet:
-            pet_id = input("Enter the ID of the pet you would like to adopt:")
+            pet_id = console.input("[bold yellow]Enter the ID of the pet you would like to adopt:")
             pet= session.query(PetItem).filter(PetItem.id == pet_id).one_or_none()
 
-        print(f'You have selected {pet.name}. Their adoption fee ${pet.unit_price:.2f}.')
+        console.print(f'[bold magenta]You have selected {pet.name}. Their adoption fee ${pet.unit_price:.2f}.')
         cart.append(pet)
         #print(f'{cart}')
 
-        answer = input("Would you like to adopt another pet? (y/n)").lower()
+        answer = console.input("[bold yellow]Would you like to adopt another pet? (y/n)").lower()
         if answer in NO:
             total_cost = sum(pet.unit_price for pet in cart)
-            print(f'Your total adoption fee(s) is ${total_cost:.2f}.')
+
+            console.print(f'[bold lime]Your total adoption fee(s) is ${total_cost:.2f}.')
             print('''
                  ___ _,_  _, _, _ _,_   , _  _, _,_   __,  _, __,    _, _,_  _, __, __, _ _, _  _,   _  _ _ ___ _,_   __, __, __, ___ ___ ,  _,   __, __, ___  _, ,
                   |  |_| /_\ |\ | |_/   \ | / \ | |   |_  / \ |_)   (_  |_| / \ |_) |_) | |\ | / _   |  | |  |  |_|   |_) |_) |_   |   |  ' (_    |_) |_   |  (_  |
