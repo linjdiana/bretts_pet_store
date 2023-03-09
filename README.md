@@ -32,3 +32,4 @@ directory with `python cli.py` or `./cli.py`.
 
 - User has the option to add multiple pets to cart. After confirming that you are ready to check out, the total price of all the pets purchased will appear, and now you have a few new pets!
 Our wireframe link is here: https://www.figma.com/file/HhuPRRkTUFGYZ8fLV8AcBy/Untitled?node-id=0%3A1&t=jwwjY3v8uL0TIcBV-1
+
