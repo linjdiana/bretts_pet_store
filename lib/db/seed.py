@@ -12,6 +12,8 @@ session = Session()
 
 fake = Faker()
 
+pet_stores = ["Purrfectly Pawsome", "The Furry Bunch", "The Bark Side", "Fur-Ever Friends", "Furry Fiesta", "Paws 'N Claws", "Critter Caboodle", "Bark 'N Purr ", "Wet Noses", "Wagging and Clawing"]
+
 pet_names = ["Max", "Buddy", "Charlie", "Rocky", "Cooper", "Bear", "Duke", "Teddy", "Harley", "Oliver", "Jack", "Tucker", "Zeus", "Jake", "Winston", "Oscar", "Bailey", "Gus", "Loki", "Roxy", "Stella", "Maggie", "Luna", "Daisy", "Rosie", "Sadie", "Lucy", "Coco", "Chloe", "Lilly", "Sophie", "Zoe", "Abby", "Gracie", "Ruby", "Molly", "Emma", "Mia", "Ava", "Isabella", "Leah", "Avery", "Ella", "Scarlett", "Lila", "Nora", "Hazel", "Lucy", "Lily"]
 
 pets = ["Domestic Long Hair", "Domestic Short Hair", "Siamese", "Ragdoll", "Persian", "Bengal", "Russian Blue", "Sphynx", "American Shorthair", "Scottish Fold", "Maine Coon", "Devon Rex", "Burmese", "Abyssinian", "Cornish Rex", "Himalayan", "Turkish Angora", "Tonkinese", "British Shorthair", "Oriental Shorthair", "Exotic Shorthair", "Chartreux", "Birman", "Norwegian Forest Cat", "Balinese", "Snowshoe", "Manx", "Somali", "Turkish Van", "Bombay", "Japanese Bobtail", "Singapura", "American Wirehair", "Egyptian Mau", "LaPerm", "Peterbald", "Selkirk Rex", "Ocicat", "Pixie-Bob", "Siberian Husky", "Labrador Retriever", "Golden Retriever", "Chihuahua", "Poodle", "Bulldog", "German Shepherd", "Boxer", "Beagle", "Dachshund", "Yorkshire Terrier", "Great Dane", "Bichon Frise", "Bernese Mountain Dog"]
@@ -23,10 +25,13 @@ def create_stores():
 
     print("New stores generating...")
 
-    stores = [Store(
-        name=fake.name() + "'s Pet Shop",
-        address=fake.address(),
-    ) for i in range(10)]
+    stores = []
+    for store in pet_stores:
+        item = Store(
+            name = store,
+            address=fake.address()
+        )
+        stores.append(item)
     session.add_all(stores)
     session.commit()
     return stores
