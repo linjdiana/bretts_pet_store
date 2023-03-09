@@ -29,7 +29,7 @@ if __name__ == '__main__':
                            ==(Y)==         (V)
                 ----------(u)---(u)----oOo--U--oOo---
                 __|_______|_______|_______|_______|___''')
-    console.print("[bold yellow]Welcome to Brett\'s Pets! ""\U0001F63B""\U0001F429""\U0001F9A7")
+    console.print("[bold yellow]Welcome to Brett\'s Pets! ""\U0001F63B""\U0001F408""\U0001F436""\U0001F429")
     console.print('[bold dark_orange]Here is a list of available stores:')
 
     cart= []
