@@ -2,6 +2,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from rich.console import Console
 
 from db.models import Store, PetItem, pet_item_store
@@ -21,11 +22,12 @@ if __name__ == '__main__':
     |    |   \ |  | \/\  ___/|  |  |  |  \___ \   |    |   \  ___/|  |  \___ \ 
     |______  / |__|    \___  >__|  |__| /____  >  |____|    \___  >__| /____  >
             \/              \/                \/                 \/          \/ 
-                |\_/|        D\___/\
-                (0_0)         (0_o)
-               ==(Y)==         (V)
-    ----------(u)---(u)----oOo--U--oOo---
-    __|_______|_______|_______|_______|___''')
+            
+                            |\_/|        D\___/\\
+                            (0_0)         (0_o)
+                           ==(Y)==         (V)
+                ----------(u)---(u)----oOo--U--oOo---
+                __|_______|_______|_______|_______|___''')
     console.print("[bold yellow]Welcome to Brett's Pets!")
     console.print('[bold]Here is a list of available stores:')
 
@@ -57,19 +59,22 @@ if __name__ == '__main__':
         answer = console.input("[bold yellow]Would you like to adopt another pet? (y/n)").lower()
         if answer in NO:
             total_cost = sum(pet.unit_price for pet in cart)
-            console.print(f'[bold lime]Your total adoption fee(s) is ${total_cost:.2f}. Thank you for shopping with Brett\'s Pets')
+
+            console.print(f'[bold lime]Your total adoption fee(s) is ${total_cost:.2f}.')
+            print('''
+                 ___ _,_  _, _, _ _,_   , _  _, _,_   __,  _, __,    _, _,_  _, __, __, _ _, _  _,   _  _ _ ___ _,_   __, __, __, ___ ___ ,  _,   __, __, ___  _, ,
+                  |  |_| /_\ |\ | |_/   \ | / \ | |   |_  / \ |_)   (_  |_| / \ |_) |_) | |\ | / _   |  | |  |  |_|   |_) |_) |_   |   |  ' (_    |_) |_   |  (_  |
+                  |  | | | | | \| | \    \| \_/ | |   |   \_/ | \   ,_) | | \ / |   |   | | \| \_/   |/\| |  |  | |   |_) | \ |_   |   |    , )   |   |_   |  ,_) |
+                  ~  ~ ~ ~ ~ ~  ~ ~ ~     )  ~  `~'   ~    ~  ~ ~    ~  ~ ~  ~  ~   ~   ~ ~  ~  ~    ~  ~ ~  ~  ~ ~   ~   ~ ~ ~~~  ~   ~     ~    ~   ~~~  ~   ~  .
+                                         ~'                                                                                                                        
+                                                                    |\_/|                  
+                                                                    | @ @   Woof! 
+                                                                    |   <>              _             |\      _,,,---,,_ 
+                                                                    |  _/\------____ ((| |))    ZZZzz /,`.-'`'    -.  ;-;;,_
+                                                                    |               `--' |           |,4-  ) )-,_. ,\ (  `'-'
+                                                                ____|_       ___|   |___.'          '---''(_/--'  `-'\_) 
+                                                                /_/_____/____/_______|
+            
+            ''')
             break
-        
-        # Start adding items to cart
-        # shopping_cart, cart_total = fill_cart(session, store)
-        # print('Here are the items in your cart:')
-        # show_cart(shopping_cart)
-
-        # # Remove unwanted items from cart
-        # remove_from_cart(session, shopping_cart, cart_total)
-
-        # # Collect payment
-        # print(f'Your total is ${cart_total:.2f}\n')
-        # collect_payment(cart_total)
-
-        # print('Thank you for using the Code Blooded pet store checkout CLI!\n')
+       
